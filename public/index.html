@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Book an appointment</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Book an appointment</h1>
+        <p class="muted" id="zone"></p>
+      </header>
+
+      <section id="pick">
+        <div id="slots" aria-live="polite"><p class="muted">Loading slots…</p></div>
+
+        <form id="form" hidden novalidate>
+          <h2 id="chosen"></h2>
+          <label>Full name <input name="name" autocomplete="name" required maxlength="200" /></label>
+          <label>Email <input name="email" type="email" autocomplete="email" required /></label>
+          <p class="error" id="form-error" role="alert"></p>
+          <div class="actions">
+            <button type="submit">Book</button>
+            <button type="button" class="plain" id="change">Change time</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="done" hidden>
+        <h2 id="done-title"></h2>
+        <dl id="details"></dl>
+        <p class="error" id="done-error" role="alert"></p>
+        <div class="actions">
+          <button type="button" class="plain" id="cancel">Cancel booking</button>
+          <button type="button" id="again">Book another</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
