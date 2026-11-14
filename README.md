@@ -3,8 +3,8 @@
 An API for booking clinic appointment slots, and a web page that uses it. Built for the Koya Cohort 4 assessment,
 to the spec at https://koyaacademy.com/assessment-api.
 
-- API: `https://<host>/api` (every request needs `X-API-Key`)
-- Web page: `https://<host>/`
+- API: https://clinic-booking-sepia.vercel.app/api (every request needs `X-API-Key`)
+- Web page: https://clinic-booking-sepia.vercel.app
 
 TypeScript, [Hono](https://hono.dev), Postgres. Hosted on Vercel with a Neon database.
 
@@ -18,6 +18,12 @@ npm install
 npm run migrate               # creates the tables
 npm run dev                   # http://localhost:3000
 API_KEY=... npx tsx scripts/seed.ts   # a week of slots for two doctors
+```
+
+To run the spec's checks against a deployed copy (this resets its data):
+
+```sh
+API_URL=https://.../api API_KEY=... npx tsx scripts/check-live.ts
 ```
 
 Tests run against a real Postgres (`TEST_DATABASE_URL`, default `postgres://postgres:local@localhost:55499/clinic`),
@@ -60,7 +66,7 @@ request isn't a new attempt and doesn't count.
 
 ## The web page
 
-`public/` is a plain HTML page with no build step. It talks to `/site/*`, which runs the same booking code on the
+`public/` is a plain HTML page with no build step; Vercel's CDN serves its files and the app serves `/`. It talks to `/site/*`, which runs the same booking code on the
 server, so the API key never reaches the browser. Those routes refuse writes from other origins, and the per-email
 limit applies to them too. Each booking attempt sends an `Idempotency-Key`, so a double click books once.
 

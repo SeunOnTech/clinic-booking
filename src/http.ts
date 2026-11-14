@@ -1,4 +1,5 @@
 import { createHash, timingSafeEqual } from "node:crypto";
+import { readFile } from "node:fs/promises";
 import { Hono, type Context } from "hono";
 import { bodyLimit } from "hono/body-limit";
 import type { ContentfulStatusCode } from "hono/utils/http-status";
@@ -84,6 +85,11 @@ export function createApp(db: Db, apiKey: string) {
   if (apiKey.length < 16) throw new Error("API_KEY must be at least 16 characters");
 
   const app = new Hono();
+  // Vercel's CDN serves the rest of public/, but sends "/" to this function.
+  let page: Promise<string> | undefined;
+  app.get("/", async (c) =>
+    c.html(await (page ??= readFile(new URL("../public/index.html", import.meta.url), "utf8"))),
+  );
   app.route("/api", api(db, apiKey));
   app.route("/site", site(db));
 

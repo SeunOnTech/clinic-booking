@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
-import { createApp } from "../src/app.js";
+import { createApp } from "../src/http.js";
 import { createPool } from "../src/db.js";
 
 const KEY = "test-key-0123456789";
